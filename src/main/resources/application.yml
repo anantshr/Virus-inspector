@@ -1,0 +1,4 @@
+clamd:
+  hostname: localhost
+  port: 3310
+  timeout: 50000
