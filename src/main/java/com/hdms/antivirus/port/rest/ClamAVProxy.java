@@ -22,6 +22,10 @@ public class ClamAVProxy {
         return "Clamd responding: " + a.ping() + "\n";
     }
 
+    @RequestMapping(method={RequestMethod.GET},value={"/version"})
+    public String getVersion() {
+        return "1.0";
+    }
     /**
      * @return Clamd scan result
      */
