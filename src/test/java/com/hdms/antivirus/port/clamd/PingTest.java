@@ -16,7 +16,7 @@ public class PingTest {
 
   @Test
   public void testPingPong() throws UnknownHostException, IOException  {
-    ClamdConfig config = new ClamdConfig ( "localhost", 3310,500);
+    ClamdConfig config = new ClamdConfig ( "localhost", 3310,500,"200000KB","200000KB");
     ClamdVerifier clamdVerifier = new ClamdVerifier(config);
     assertTrue(clamdVerifier.ping());
   }

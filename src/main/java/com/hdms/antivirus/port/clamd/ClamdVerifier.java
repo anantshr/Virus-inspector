@@ -1,5 +1,6 @@
 package com.hdms.antivirus.port.clamd;
 import com.hdms.antivirus.config.ClamdConfig;
+import com.hdms.antivirus.domain.Status;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
@@ -12,7 +13,7 @@ import java.util.Arrays;
 
 @Component
 @RequiredArgsConstructor
-public class ClamdVerifier {
+public class ClamdVerifier implements Status {
 
     private final ClamdConfig clamdConfig;
 
@@ -21,6 +22,7 @@ public class ClamdVerifier {
      *
      * @return true if the server responded with proper ping reply.
      */
+    @Override
     public boolean ping() throws IOException {
         try (Socket socket = new Socket(clamdConfig.getHostname (),clamdConfig.getPort ()); OutputStream outs = socket.getOutputStream()) {
             socket.setSoTimeout(clamdConfig.getTimeout ());

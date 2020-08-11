@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.RestController;
 import java.io.IOException;
 
 @RestController
-public class ClamAVProxyVerifier implements Status {
+public class ClamAVProxyVerifier  {
 
     private final Status status;
 
@@ -19,7 +19,6 @@ public class ClamAVProxyVerifier implements Status {
      * @return Clamd status.
      */
     @RequestMapping("/")
-    @Override
     public String ping() throws IOException {
         return "Clamd responding: " + status.ping() + "\n";
     }
