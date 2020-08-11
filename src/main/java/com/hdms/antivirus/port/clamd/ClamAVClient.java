@@ -3,7 +3,6 @@ package com.hdms.antivirus.port.clamd;
 import com.hdms.antivirus.config.ClamdConfig;
 import com.hdms.antivirus.domain.Scanner;
 import lombok.RequiredArgsConstructor;
-import lombok.extern.log4j.Log4j;
 import org.springframework.stereotype.Component;
 
 import java.io.*;
@@ -15,7 +14,6 @@ import java.nio.charset.StandardCharsets;
  * Simple client for ClamAV's clamd scanner.
  * Provides straightforward instream scanning.
  */
-@Log4j
 @Component
 @RequiredArgsConstructor
 public class ClamAVClient implements Scanner {
