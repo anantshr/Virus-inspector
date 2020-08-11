@@ -8,7 +8,7 @@ import org.springframework.http.HttpStatus;
 import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.assertThat;
 
-public class ScannerBdd {
+public class ScannerBdd extends SpringIntegrationTest{
     @When("^the client calls /version$")
     public void the_client_issues_GET_version() throws Throwable{
         executeGet("http://localhost:8080/version");
