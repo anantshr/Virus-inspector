@@ -2,3 +2,5 @@ clamd:
   hostname: localhost
   port: 3310
   timeout: 50000
+  maxfilesize: 20000KB
+  maxrequestsize: 20000KB

@@ -10,7 +10,7 @@ import static org.junit.Assert.assertThat;
 
 public class ScannerBddStep extends SpringIntegrationTest{
     @When("^the client calls /version$")
-    public void the_client_issues_GET_version() throws Throwable{
+    public void the_client_issues_GET() throws Throwable{
         executeGet("http://localhost:8080/version");
     }
 
@@ -22,7 +22,7 @@ public class ScannerBddStep extends SpringIntegrationTest{
     }
 
     @And("^the client receives server version (.+)$")
-    public void the_client_receives_server_version_body(String version) throws Throwable {
+    public void the_client_receives_server_version_body(String version) {
         assertThat(latestResponse.getBody(), is(version));
     }
 
