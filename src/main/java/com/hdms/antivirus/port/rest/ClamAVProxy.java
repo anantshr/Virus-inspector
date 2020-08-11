@@ -13,28 +13,23 @@ public class ClamAVProxy {
 
     private final Scanner scanner;
 
-    /**
-     * @return Clamd scan result
-     */
-    @RequestMapping(value = "/scan", method = RequestMethod.POST)
+    @RequestMapping(value = "/diagnose", method = RequestMethod.POST)
     public @ResponseBody
     String handleFileUpload(@RequestParam("name") String name,
                             @RequestParam("file") MultipartFile file) throws IOException {
-        if (!file.isEmpty()) {
-            byte[] r = scanner.scan(file.getInputStream());
-            return "Everything ok : " + scanner.isCleanReply(r) + "\n";
-        } else throw new IllegalArgumentException("empty file");
+        if (!file.isEmpty ()) {
+            byte[] r = scanner.scan ( file.getInputStream () );
+            return "Everything ok : " + scanner.isCleanReply ( r ) + "\n";
+        } else throw new IllegalArgumentException ( "empty file" );
     }
 
-    /**
-     * @return Clamd scan reply
-     */
-    @RequestMapping(value = "/scanReply", method = RequestMethod.POST)
+
+    @RequestMapping(value = "/diagnosticResult", method = RequestMethod.POST)
     public @ResponseBody
     String handleFileUploadReply(@RequestParam("name") String name,
                                  @RequestParam("file") MultipartFile file) throws IOException {
-        if (!file.isEmpty()) {
-            return new String(scanner.scan(file.getInputStream()));
-        } else throw new IllegalArgumentException("empty file");
+        if (!file.isEmpty ()) {
+            return new String ( scanner.scan ( file.getInputStream () ) );
+        } else throw new IllegalArgumentException ( "empty file" );
     }
 }
