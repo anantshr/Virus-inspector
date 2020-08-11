@@ -11,8 +11,6 @@ import org.springframework.util.unit.DataSize;
 import org.springframework.web.client.RestTemplate;
 
 import javax.servlet.MultipartConfigElement;
-import java.util.HashMap;
-import java.util.Map;
 
 @Configuration
 @EnableConfigurationProperties(value = ClamdConfig.class)

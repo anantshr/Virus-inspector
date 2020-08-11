@@ -19,6 +19,4 @@ public class ClamdConfig {
     private int timeout;
     private String maxfilesize;
     private String maxrequestsize;
-    public ClamdConfig(){
-    }
 }
