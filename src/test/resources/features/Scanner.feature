@@ -5,3 +5,4 @@ Feature: the version can be retrieved
     Then the client receives status code of 200
     And the client receives server version 1.0
     Examples:
+      |1  |1|

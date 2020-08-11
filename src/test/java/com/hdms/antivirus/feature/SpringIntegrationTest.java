@@ -1,14 +1,12 @@
 package com.hdms.antivirus.feature;
 
-//import com.hdms.antivirus.Application;
-import org.junit.runner.RunWith;
+import com.hdms.antivirus.Application;
 import org.springframework.beans.factory.annotation.Autowired;
-//import org.springframework.boot.test.context.SpringBootTest;
-//import org.springframework.boot.test.context.SpringBootTest.WebEnvironment;
+import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.client.ClientHttpResponse;
 import org.springframework.test.context.ContextConfiguration;
-import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+import org.springframework.test.context.web.WebAppConfiguration;
 import org.springframework.web.client.ResponseErrorHandler;
 import org.springframework.web.client.RestTemplate;
 
@@ -16,8 +14,10 @@ import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 
-@RunWith(SpringJUnit4ClassRunner.class)
-//@SpringBootTest(classes = Application.class, webEnvironment = WebEnvironment.DEFINED_PORT)
+//@RunWith(SpringJUnit4ClassRunner.class)
+@SpringBootTest(classes = Application.class,
+        webEnvironment = SpringBootTest.WebEnvironment.DEFINED_PORT)
+@WebAppConfiguration
 @ContextConfiguration
 public class SpringIntegrationTest {
     static ResponseResults latestResponse = null;
@@ -26,40 +26,40 @@ public class SpringIntegrationTest {
     protected RestTemplate restTemplate;
 
     void executeGet(String url) throws IOException {
-        final Map<String, String> headers = new HashMap<>();
-        headers.put("Accept", "application/json");
-        final HeaderSettingRequestCallback requestCallback = new HeaderSettingRequestCallback(headers);
-        final ResponseResultErrorHandler errorHandler = new ResponseResultErrorHandler();
+        final Map<String, String> headers = new HashMap<> ();
+        headers.put ( "Accept", "application/json" );
+        final HeaderSettingRequestCallback requestCallback = new HeaderSettingRequestCallback ( headers );
+        final ResponseResultErrorHandler errorHandler = new ResponseResultErrorHandler ();
 
-        restTemplate.setErrorHandler(errorHandler);
-        latestResponse = restTemplate.execute(url, HttpMethod.GET, requestCallback, response -> {
+        restTemplate.setErrorHandler ( errorHandler );
+        latestResponse = restTemplate.execute ( url, HttpMethod.GET, requestCallback, response -> {
             if (errorHandler.hadError) {
-                return (errorHandler.getResults());
+                return (errorHandler.getResults ());
             } else {
-                return (new ResponseResults(response));
+                return (new ResponseResults ( response ));
             }
-        });
+        } );
     }
 
     void executePost() throws IOException {
-        final Map<String, String> headers = new HashMap<>();
-        headers.put("Accept", "application/json");
-        final HeaderSettingRequestCallback requestCallback = new HeaderSettingRequestCallback(headers);
-        final ResponseResultErrorHandler errorHandler = new ResponseResultErrorHandler();
+        final Map<String, String> headers = new HashMap<> ();
+        headers.put ( "Accept", "application/json" );
+        final HeaderSettingRequestCallback requestCallback = new HeaderSettingRequestCallback ( headers );
+        final ResponseResultErrorHandler errorHandler = new ResponseResultErrorHandler ();
 
         if (restTemplate == null) {
-            restTemplate = new RestTemplate();
+            restTemplate = new RestTemplate ();
         }
 
-        restTemplate.setErrorHandler(errorHandler);
+        restTemplate.setErrorHandler ( errorHandler );
         latestResponse = restTemplate
-                .execute("http://localhost:8082/baeldung", HttpMethod.POST, requestCallback, response -> {
+                .execute ( "http://localhost:8082/baeldung", HttpMethod.POST, requestCallback, response -> {
                     if (errorHandler.hadError) {
-                        return (errorHandler.getResults());
+                        return (errorHandler.getResults ());
                     } else {
-                        return (new ResponseResults(response));
+                        return (new ResponseResults ( response ));
                     }
-                });
+                } );
     }
 
     private class ResponseResultErrorHandler implements ResponseErrorHandler {
@@ -72,13 +72,13 @@ public class SpringIntegrationTest {
 
         @Override
         public boolean hasError(ClientHttpResponse response) throws IOException {
-            hadError = response.getRawStatusCode() >= 400;
+            hadError = response.getRawStatusCode () >= 400;
             return hadError;
         }
 
         @Override
         public void handleError(ClientHttpResponse response) throws IOException {
-            results = new ResponseResults(response);
+            results = new ResponseResults ( response );
         }
     }
 }
