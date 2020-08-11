@@ -1,7 +1,6 @@
 package com.hdms.antivirus.port.rest;
 
 import com.hdms.antivirus.domain.Scanner;
-import com.hdms.antivirus.port.clamd.ClamdVerifier;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
@@ -13,19 +12,7 @@ import java.io.IOException;
 public class ClamAVProxy {
 
     private final Scanner scanner;
-    /**
-     * @return Clamd status.
-     */
-    @RequestMapping("/")
-    public String ping() throws IOException {
-        ClamdVerifier a = new ClamdVerifier("localhost", 3310, 500);
-        return "Clamd responding: " + a.ping() + "\n";
-    }
 
-    @RequestMapping(method={RequestMethod.GET},value={"/version"})
-    public String getVersion() {
-        return "1.0";
-    }
     /**
      * @return Clamd scan result
      */

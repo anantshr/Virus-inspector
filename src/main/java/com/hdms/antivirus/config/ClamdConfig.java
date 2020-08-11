@@ -1,6 +1,8 @@
 package com.hdms.antivirus.config;
 
+import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.context.annotation.Configuration;
@@ -9,17 +11,10 @@ import org.springframework.context.annotation.Configuration;
 @ConfigurationProperties(prefix = "clamd")
 @Setter
 @Getter
+@NoArgsConstructor
+@AllArgsConstructor
 public class ClamdConfig {
     private String hostname;
     private int port;
     private int timeout;
-
-    public ClamdConfig(){
-    }
-    public ClamdConfig(String hostname, int port, int timeout) {
-        this.hostname = hostname;
-        this.port = port;
-        this.timeout = timeout;
-    }
-
 }

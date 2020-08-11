@@ -1,5 +1,6 @@
 package com.hdms.antivirus.port.clamd;
 
+import com.hdms.antivirus.config.ClamdConfig;
 import org.junit.Test;
 
 import java.io.IOException;
@@ -12,9 +13,11 @@ import static org.junit.Assert.assertTrue;
  */
 public class PingTest {
 
+
   @Test
   public void testPingPong() throws UnknownHostException, IOException  {
-    ClamdVerifier clamdVerifier = new ClamdVerifier("localhost", 3310,100);
+    ClamdConfig config = new ClamdConfig ( "localhost", 3310,500);
+    ClamdVerifier clamdVerifier = new ClamdVerifier(config);
     assertTrue(clamdVerifier.ping());
   }
 }

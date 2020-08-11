@@ -1,5 +1,7 @@
 package com.hdms.antivirus.port.clamd;
+import com.hdms.antivirus.config.ClamdConfig;
 import lombok.RequiredArgsConstructor;
+import org.springframework.stereotype.Component;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -8,12 +10,11 @@ import java.net.Socket;
 import java.nio.charset.StandardCharsets;
 import java.util.Arrays;
 
+@Component
 @RequiredArgsConstructor
 public class ClamdVerifier {
 
-    private final String hostName;
-    private final int port;
-    private final int timeout;
+    private final ClamdConfig clamdConfig;
 
     /**
      * Run PING command to clamd to test it is responding.
@@ -21,8 +22,8 @@ public class ClamdVerifier {
      * @return true if the server responded with proper ping reply.
      */
     public boolean ping() throws IOException {
-        try (Socket socket = new Socket(hostName,port); OutputStream outs = socket.getOutputStream()) {
-            socket.setSoTimeout(timeout);
+        try (Socket socket = new Socket(clamdConfig.getHostname (),clamdConfig.getPort ()); OutputStream outs = socket.getOutputStream()) {
+            socket.setSoTimeout(clamdConfig.getTimeout ());
             outs.write("PING".getBytes(StandardCharsets.US_ASCII));
             outs.flush();
             byte[] b = new byte[4];// PONG
