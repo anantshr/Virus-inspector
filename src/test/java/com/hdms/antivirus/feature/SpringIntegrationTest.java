@@ -14,10 +14,7 @@ import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 
-//@RunWith(SpringJUnit4ClassRunner.class)
-@SpringBootTest(classes = Application.class,
-        webEnvironment = SpringBootTest.WebEnvironment.DEFINED_PORT)
-@WebAppConfiguration
+@SpringBootTest(classes = Application.class, webEnvironment = SpringBootTest.WebEnvironment.DEFINED_PORT)
 @ContextConfiguration
 public class SpringIntegrationTest {
     static ResponseResults latestResponse = null;
@@ -25,41 +22,41 @@ public class SpringIntegrationTest {
     @Autowired
     protected RestTemplate restTemplate;
 
-    void executeGet(String url) throws IOException {
-        final Map<String, String> headers = new HashMap<> ();
-        headers.put ( "Accept", "application/json" );
-        final HeaderSettingRequestCallback requestCallback = new HeaderSettingRequestCallback ( headers );
-        final ResponseResultErrorHandler errorHandler = new ResponseResultErrorHandler ();
+    void executeGet(String url) {
+        final Map<String, String> headers = new HashMap<>();
+        headers.put("Accept", "application/json");
+        final HeaderSettingRequestCallback requestCallback = new HeaderSettingRequestCallback(headers);
+        final ResponseResultErrorHandler errorHandler = new ResponseResultErrorHandler();
 
-        restTemplate.setErrorHandler ( errorHandler );
-        latestResponse = restTemplate.execute ( url, HttpMethod.GET, requestCallback, response -> {
+        restTemplate.setErrorHandler(errorHandler);
+        latestResponse = restTemplate.execute(url, HttpMethod.GET, requestCallback, response -> {
             if (errorHandler.hadError) {
-                return (errorHandler.getResults ());
+                return (errorHandler.getResults());
             } else {
-                return (new ResponseResults ( response ));
+                return (new ResponseResults(response));
             }
-        } );
+        });
     }
 
-    void executePost() throws IOException {
-        final Map<String, String> headers = new HashMap<> ();
-        headers.put ( "Accept", "application/json" );
-        final HeaderSettingRequestCallback requestCallback = new HeaderSettingRequestCallback ( headers );
-        final ResponseResultErrorHandler errorHandler = new ResponseResultErrorHandler ();
+    void executePost() {
+        final Map<String, String> headers = new HashMap<>();
+        headers.put("Accept", "application/json");
+        final HeaderSettingRequestCallback requestCallback = new HeaderSettingRequestCallback(headers);
+        final ResponseResultErrorHandler errorHandler = new ResponseResultErrorHandler();
 
         if (restTemplate == null) {
-            restTemplate = new RestTemplate ();
+            restTemplate = new RestTemplate();
         }
 
-        restTemplate.setErrorHandler ( errorHandler );
+        restTemplate.setErrorHandler(errorHandler);
         latestResponse = restTemplate
-                .execute ( "http://localhost:8082/baeldung", HttpMethod.POST, requestCallback, response -> {
+                .execute("http://localhost:8082/baeldung", HttpMethod.POST, requestCallback, response -> {
                     if (errorHandler.hadError) {
-                        return (errorHandler.getResults ());
+                        return (errorHandler.getResults());
                     } else {
-                        return (new ResponseResults ( response ));
+                        return (new ResponseResults(response));
                     }
-                } );
+                });
     }
 
     private class ResponseResultErrorHandler implements ResponseErrorHandler {
@@ -72,13 +69,13 @@ public class SpringIntegrationTest {
 
         @Override
         public boolean hasError(ClientHttpResponse response) throws IOException {
-            hadError = response.getRawStatusCode () >= 400;
+            hadError = response.getRawStatusCode() >= 400;
             return hadError;
         }
 
         @Override
         public void handleError(ClientHttpResponse response) throws IOException {
-            results = new ResponseResults ( response );
+            results = new ResponseResults(response);
         }
     }
 }

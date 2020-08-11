@@ -17,4 +17,8 @@ public class ClamdConfig {
     private String hostname;
     private int port;
     private int timeout;
+    private String maxfilesize;
+    private String maxrequestsize;
+    public ClamdConfig(){
+    }
 }
