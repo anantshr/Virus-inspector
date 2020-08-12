@@ -9,7 +9,7 @@ import java.io.IOException;
 
 @RestController
 @RequiredArgsConstructor
-public class ClamAVProxy {
+public class VirusScannerController {
 
     private final Scanner scanner;
 

@@ -1,6 +1,6 @@
 package com.hdms.antivirus.port.clamd;
 
-import com.hdms.antivirus.config.ClamdConfig;
+import com.hdms.antivirus.port.clamd.config.ClamdConfig;
 import com.hdms.antivirus.domain.Scanner;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;

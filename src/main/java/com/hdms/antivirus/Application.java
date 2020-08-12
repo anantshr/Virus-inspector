@@ -1,6 +1,6 @@
 package com.hdms.antivirus;
 
-import com.hdms.antivirus.config.ClamdConfig;
+import com.hdms.antivirus.port.clamd.config.ClamdConfig;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
@@ -15,10 +15,6 @@ import javax.servlet.MultipartConfigElement;
 @Configuration
 @EnableConfigurationProperties(value = ClamdConfig.class)
 @SpringBootApplication
-/**
- * Simple Spring Boot application which acts as a REST endpoint for
- * clamd server.
- */
 public class Application {
 
   private final ClamdConfig clamdConfig;

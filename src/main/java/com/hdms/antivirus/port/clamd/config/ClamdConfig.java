@@ -1,4 +1,4 @@
-package com.hdms.antivirus.config;
+package com.hdms.antivirus.port.clamd.config;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
