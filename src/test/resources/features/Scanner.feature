@@ -1,21 +1,25 @@
 Feature: the version can be retrieved
 
-  Scenario: client makes call to scan file without virus
-    When the client calls /diagnose with name as nonvirus and file as news.txt
-    Then the virus scan response status code of 200
-    And the final test response Everything ok : true
+  Scenario: user submit a valid file
+    Given A valid Hilti application user
+    When user upload file news.txt
+    Then the virus scan happens successfully with response code is 200
+    And the final diagnose response It is a Good File : true
 
-  Scenario: client makes call to scan file with virus
-    When the client calls /diagnose with name as virus and file as virus.txt
-    Then the virus scan response status code of 200
-    And the final test response Everything ok : false
+  Scenario: user submit virus infected file
+    Given A valid Hilti application user
+    When user upload file virus.txt
+    Then the virus scan happens successfully with response code is 200
+    And the final diagnose response It is a Good File : false
 
-  Scenario: client makes call to scan file which is in another Language
-    When the client calls /diagnose with name as anotherLang and file as anotherLangFile
-    Then the virus scan response status code of 200
-    And the final test response Everything ok : true
+  Scenario: User submit a valid file in local language
+    Given A valid Hilti application user
+    When user upload file anotherLangFile
+    Then the virus scan happens successfully with response code is 200
+    And the final diagnose response It is a Good File : true
 
-  Scenario: client makes call to scan file which is an image
-    When the client calls /diagnose with name as anotherLang and file as brokenTool.jpg
-    Then the virus scan response status code of 200
-    And the final test response Everything ok : true
+  Scenario: User submit a image of a broken hilti tool
+    Given A valid Hilti application user
+    When user upload file brokenTool.jpg
+    Then the virus scan happens successfully with response code is 200
+    And the final diagnose response It is a Good File : true

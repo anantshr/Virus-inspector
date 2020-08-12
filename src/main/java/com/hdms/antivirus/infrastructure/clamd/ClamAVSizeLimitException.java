@@ -1,4 +1,4 @@
-package com.hdms.antivirus.port.clamd;
+package com.hdms.antivirus.infrastructure.clamd;
 
 /**
  * Thrown if clamd size limit is exceeded during scanning.

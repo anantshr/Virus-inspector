@@ -19,6 +19,7 @@ import java.util.Map;
 
 @SpringBootTest(classes = Application.class, webEnvironment = SpringBootTest.WebEnvironment.DEFINED_PORT)
 @ContextConfiguration
+//#TODO This is a dirty Code, Need to be refactor it has reached only till green cycle.
 public class SpringIntegrationTest {
     static ResponseResults latestResponse = null;
     static VirusScanResponse virusScanResponse = null;
@@ -91,7 +92,6 @@ public class SpringIntegrationTest {
 
         String charset = "UTF-8";
         String attachmentFilePath = param.get ( "file" );
-        url = url+"?name="+param.get ( "name" );
         File binaryFile = new File ( attachmentFilePath );
         String boundary = "------------------------" + Long.toHexString ( System.currentTimeMillis () ); // Just generate some unique random value.
         String CRLF = "\r\n"; // Line separator required by multipart/form-data.

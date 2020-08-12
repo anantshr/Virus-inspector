@@ -1,7 +1,7 @@
-package com.hdms.antivirus.domain;
+package com.hdms.antivirus.contract;
 
 import java.io.IOException;
 
-public interface Status {
+public interface HealthCheck {
     boolean ping() throws IOException;
 }

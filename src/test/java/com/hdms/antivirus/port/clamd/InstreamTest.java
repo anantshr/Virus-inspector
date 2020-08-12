@@ -1,6 +1,7 @@
 package com.hdms.antivirus.port.clamd;
 
-import com.hdms.antivirus.port.clamd.config.ClamdConfig;
+import com.hdms.antivirus.infrastructure.clamd.ClamAVClient;
+import com.hdms.antivirus.infrastructure.clamd.config.ClamdConfig;
 import io.vavr.Tuple2;
 import org.junit.Test;
 

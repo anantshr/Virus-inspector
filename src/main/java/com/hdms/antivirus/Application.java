@@ -1,6 +1,6 @@
 package com.hdms.antivirus;
 
-import com.hdms.antivirus.port.clamd.config.ClamdConfig;
+import com.hdms.antivirus.infrastructure.clamd.config.ClamdConfig;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;

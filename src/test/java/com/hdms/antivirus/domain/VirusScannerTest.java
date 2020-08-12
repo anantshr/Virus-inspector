@@ -1,18 +1,19 @@
 package com.hdms.antivirus.domain;
 
+import com.hdms.antivirus.contract.VirusScanner;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import java.io.IOException;
 
-public class ScannerTest {
+public class VirusScannerTest {
     @Autowired
-    private Scanner scanner;
+    private VirusScanner virusScanner;
 
     @Test
     public void testScanner(){
         try {
-            scanner.scan("asdf".getBytes());
+            virusScanner.scan("asdf".getBytes());
         } catch (IOException e) {
             e.printStackTrace();
         }

@@ -1,7 +1,7 @@
-package com.hdms.antivirus.port.clamd;
+package com.hdms.antivirus.infrastructure.clamd;
 
-import com.hdms.antivirus.port.clamd.config.ClamdConfig;
-import com.hdms.antivirus.domain.Scanner;
+import com.hdms.antivirus.infrastructure.clamd.config.ClamdConfig;
+import com.hdms.antivirus.contract.VirusScanner;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
@@ -16,7 +16,7 @@ import java.nio.charset.StandardCharsets;
  */
 @Component
 @RequiredArgsConstructor
-public class ClamAVClient implements Scanner {
+public class ClamAVClient implements VirusScanner {
 
     private final ClamdConfig clamdConfig;
 

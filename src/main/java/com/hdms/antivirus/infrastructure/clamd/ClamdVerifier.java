@@ -1,6 +1,6 @@
-package com.hdms.antivirus.port.clamd;
-import com.hdms.antivirus.port.clamd.config.ClamdConfig;
-import com.hdms.antivirus.domain.Status;
+package com.hdms.antivirus.infrastructure.clamd;
+import com.hdms.antivirus.infrastructure.clamd.config.ClamdConfig;
+import com.hdms.antivirus.contract.HealthCheck;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
@@ -13,7 +13,7 @@ import java.util.Arrays;
 
 @Component
 @RequiredArgsConstructor
-public class ClamdVerifier implements Status {
+public class ClamdVerifier implements HealthCheck {
 
     private final ClamdConfig clamdConfig;
 
