@@ -17,6 +17,7 @@ public class ClamAVProxy {
     public @ResponseBody
     String handleFileUpload(@RequestParam("name") String name,
                             @RequestParam("file") MultipartFile file) throws IOException {
+
         if (!file.isEmpty ()) {
             byte[] r = scanner.scan ( file.getInputStream () );
             return "Everything ok : " + scanner.isCleanReply ( r ) + "\n";

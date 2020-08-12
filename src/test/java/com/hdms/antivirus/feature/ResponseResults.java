@@ -1,6 +1,7 @@
 package com.hdms.antivirus.feature;
 
 
+import lombok.Getter;
 import org.apache.commons.io.IOUtils;
 import org.springframework.http.client.ClientHttpResponse;
 
@@ -8,6 +9,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.StringWriter;
 
+@Getter
 public class ResponseResults {
     private final ClientHttpResponse theResponse;
     private final String body;
@@ -20,11 +22,7 @@ public class ResponseResults {
         this.body = stringWriter.toString();
     }
 
-    ClientHttpResponse getTheResponse() {
-        return theResponse;
-    }
-
-    String getBody() {
-        return body;
+    public int getStatusCode() throws IOException {
+        return theResponse.getStatusCode ().value ();
     }
 }
