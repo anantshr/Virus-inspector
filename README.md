@@ -50,7 +50,7 @@ curl localhost:8080
 Clamd responding: true
 
 curl --output -F "file=<file>" -X POST localhost:8080/diagnosticReport 
-Everything ok : false
+It is a Good File : true
 ```
 #License
 ClamAV is licensed under the GNU General Public License, Version 2.
