@@ -1,6 +1,7 @@
 package com.hdms.antivirus.port.clamd;
 
-import com.hdms.antivirus.config.ClamdConfig;
+import com.hdms.antivirus.infrastructure.clamd.ClamAVClient;
+import com.hdms.antivirus.infrastructure.clamd.config.ClamdConfig;
 import io.vavr.Tuple2;
 import org.junit.Test;
 
@@ -15,7 +16,7 @@ import static org.junit.Assert.assertTrue;
  */
 public class InstreamTest {
 
-    ClamdConfig clamdConfig = new ClamdConfig ("localhost",3310,500);
+    ClamdConfig clamdConfig = new ClamdConfig ("localhost",3310,500,"20000KB","20000KB");
 
     private Tuple2<byte[], ClamAVClient> scan(byte[] input) throws IOException {
         ClamAVClient cl = new ClamAVClient( clamdConfig );

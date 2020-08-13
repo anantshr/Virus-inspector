@@ -1,9 +1,8 @@
-package com.hdms.antivirus.port.clamd;
+package com.hdms.antivirus.infrastructure.clamd;
 
-import com.hdms.antivirus.config.ClamdConfig;
-import com.hdms.antivirus.domain.Scanner;
+import com.hdms.antivirus.contract.VirusScanner;
+import com.hdms.antivirus.infrastructure.clamd.config.ClamdConfig;
 import lombok.RequiredArgsConstructor;
-import lombok.extern.log4j.Log4j;
 import org.springframework.stereotype.Component;
 
 import java.io.*;
@@ -15,10 +14,9 @@ import java.nio.charset.StandardCharsets;
  * Simple client for ClamAV's clamd scanner.
  * Provides straightforward instream scanning.
  */
-@Log4j
 @Component
 @RequiredArgsConstructor
-public class ClamAVClient implements Scanner {
+public class ClamAVClient implements VirusScanner {
 
     private final ClamdConfig clamdConfig;
 
@@ -35,10 +33,10 @@ public class ClamAVClient implements Scanner {
      */
     @Override
     public byte[] scan(InputStream is) throws IOException {
-        log.info ( "#######host name is " + clamdConfig.getHostname() );
-
-        try (Socket s = new Socket ( clamdConfig.getHostname(), clamdConfig.getPort () ); OutputStream outs = new BufferedOutputStream ( s.getOutputStream () )) {
-            s.setSoTimeout ( clamdConfig.getTimeout () );
+        try (
+                Socket socket = new Socket ( clamdConfig.getHostname (), clamdConfig.getPort () );
+                OutputStream outs = new BufferedOutputStream ( socket.getOutputStream () )) {
+            socket.setSoTimeout ( clamdConfig.getTimeout () );
 
             // handshake
             outs.write ( "zINSTREAM\0".getBytes ( StandardCharsets.US_ASCII ) );
@@ -48,7 +46,7 @@ public class ClamAVClient implements Scanner {
             int CHUNK_SIZE = 2048;
             byte[] chunk = new byte[CHUNK_SIZE];
 
-            try (InputStream clamIs = s.getInputStream ()) {
+            try (InputStream clamIs = socket.getInputStream ()) {
                 // send data
                 int read = is.read ( chunk );
                 while (read >= 0) {
@@ -100,11 +98,11 @@ public class ClamAVClient implements Scanner {
         return (r.contains ( "OK" ) && !r.contains ( "FOUND" ));
     }
 
-    private byte[] assertSizeLimit(byte[] reply) {
-        String r = new String ( reply, StandardCharsets.US_ASCII );
-        if (r.startsWith ( "INSTREAM size limit exceeded." ))
-            throw new ClamAVSizeLimitException ( "Clamd size limit exceeded. Full reply from server: " + r );
-        return reply;
+    private byte[] assertSizeLimit(byte[] replyByt) {
+        String reply = new String ( replyByt, StandardCharsets.US_ASCII );
+        if (reply.startsWith ( "INSTREAM size limit exceeded." ))
+            throw new ClamAVSizeLimitException ( "Clamd size limit exceeded. Full reply from server: " + reply );
+        return replyByt;
     }
 
     // reads all available bytes from the stream

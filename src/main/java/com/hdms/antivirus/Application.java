@@ -1,52 +1,43 @@
 package com.hdms.antivirus;
 
-import com.hdms.antivirus.config.ClamdConfig;
-import org.springframework.beans.factory.annotation.Value;
+import com.hdms.antivirus.infrastructure.clamd.config.ClamdConfig;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.boot.context.embedded.MultipartConfigFactory;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
+import org.springframework.boot.web.servlet.MultipartConfigFactory;
 import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.util.unit.DataSize;
+import org.springframework.web.client.RestTemplate;
 
 import javax.servlet.MultipartConfigElement;
-import java.util.HashMap;
-import java.util.Map;
 
 @Configuration
 @EnableConfigurationProperties(value = ClamdConfig.class)
-@ComponentScan
 @SpringBootApplication
-/**
- * Simple Spring Boot application which acts as a REST endpoint for
- * clamd server.
- */
 public class Application {
 
-  @Value("${clamd.maxfilesize}")
-  private String maxfilesize;
+    private final ClamdConfig clamdConfig;
 
-  @Value("${clamd.maxrequestsize}")
-  private String maxrequestsize;
+    public Application(ClamdConfig clamdConfig) {
+        this.clamdConfig = clamdConfig;
+    }
 
-  @Bean
-  MultipartConfigElement multipartConfigElement() {
-    MultipartConfigFactory factory = new MultipartConfigFactory();
-    factory.setMaxFileSize(maxfilesize);
-    factory.setMaxRequestSize(maxrequestsize);
-    return factory.createMultipartConfig();
-  }
+    @Bean
+    MultipartConfigElement multipartConfigElement() {
+        MultipartConfigFactory factory = new MultipartConfigFactory ();
+        factory.setMaxFileSize ( DataSize.parse ( clamdConfig.getMaxfilesize () ) );
+        factory.setMaxRequestSize ( DataSize.parse ( clamdConfig.getMaxrequestsize () ) );
+        return factory.createMultipartConfig ();
+    }
 
-  public static void main(String[] args) {
-    SpringApplication app = new SpringApplication(Application.class);
-    Map<String, Object> defaults = new HashMap<String, Object>();
-    defaults.put("clamd.host", "localhost");//TODO Port   redefine host as 192.168.50.72
-    defaults.put("clamd.port", 3310);
-    defaults.put("clamd.timeout", 500);
-    defaults.put("clamd.maxfilesize", "2000000KB");
-    defaults.put("clamd.maxrequestsize", "2000000KB");
-    app.setDefaultProperties(defaults);
-    app.run(args);
-  }
+    public static void main(String[] args) {
+        SpringApplication app = new SpringApplication ( Application.class );
+        app.run ( args );
+    }
+
+    @Bean
+    public RestTemplate getRestTemplate() {
+        return new RestTemplate ();
+    }
 }
