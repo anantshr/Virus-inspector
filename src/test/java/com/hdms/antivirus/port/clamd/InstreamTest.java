@@ -1,6 +1,6 @@
 package com.hdms.antivirus.port.clamd;
 
-import com.hdms.antivirus.infrastructure.clamd.ClamAVClient;
+import com.hdms.antivirus.infrastructure.clamd.ClamavScanner;
 import com.hdms.antivirus.infrastructure.clamd.config.ClamdConfig;
 import io.vavr.Tuple2;
 import org.junit.Test;
@@ -18,15 +18,15 @@ public class InstreamTest {
 
     ClamdConfig clamdConfig = new ClamdConfig ("localhost",3310,500,"20000KB","20000KB");
 
-    private Tuple2<byte[], ClamAVClient> scan(byte[] input) throws IOException {
-        ClamAVClient cl = new ClamAVClient( clamdConfig );
+    private Tuple2<byte[], ClamavScanner> scan(byte[] input) throws IOException {
+        ClamavScanner cl = new ClamavScanner ( clamdConfig );
         byte[] scan = cl.scan(input);
         return new Tuple2<>(scan, cl);
     }
 
     @Test
     public void testRandomBytes() throws IOException {
-        Tuple2<byte[], ClamAVClient> scanResult = scan("alsdklaksdla".getBytes(StandardCharsets.US_ASCII));
+        Tuple2<byte[], ClamavScanner> scanResult = scan("alsdklaksdla".getBytes(StandardCharsets.US_ASCII));
         assertTrue(scanResult._2.isCleanReply(scanResult._1));
     }
 
@@ -34,27 +34,27 @@ public class InstreamTest {
     public void testPositive() throws IOException {
         // http://www.eicar.org/86-0-Intended-use.html
         byte[] EICAR = "X5O!P%@AP[4\\PZX54(P^)7CC)7}$EICAR-STANDARD-ANTIVIRUS-TEST-FILE!$H+H*".getBytes(StandardCharsets.US_ASCII);
-        Tuple2<byte[], ClamAVClient> scanResult = scan(EICAR);
+        Tuple2<byte[], ClamavScanner> scanResult = scan(EICAR);
         assertFalse(scanResult._2.isCleanReply(scanResult._1));
     }
 
     @Test
     public void testStreamChunkingWorks() throws IOException {
         byte[] multipleChunks = new byte[50000];
-        Tuple2<byte[], ClamAVClient> scanResult = scan(multipleChunks);
+        Tuple2<byte[], ClamavScanner> scanResult = scan(multipleChunks);
         assertTrue(scanResult._2.isCleanReply(scanResult._1));
     }
 
     @Test
     public void testChunkLimit() throws IOException {
         byte[] maximumChunk = new byte[2048];
-        Tuple2<byte[], ClamAVClient> scanResult = scan(maximumChunk);
+        Tuple2<byte[], ClamavScanner> scanResult = scan(maximumChunk);
         assertTrue(scanResult._2.isCleanReply(scanResult._1));
     }
 
     @Test
     public void testZeroBytes() throws IOException {
-        Tuple2<byte[], ClamAVClient> scanResult = scan(new byte[]{});
+        Tuple2<byte[], ClamavScanner> scanResult = scan(new byte[]{});
         assertTrue(scanResult._2.isCleanReply(scanResult._1));
     }
 

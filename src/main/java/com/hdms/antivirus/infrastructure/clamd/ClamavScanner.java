@@ -3,7 +3,6 @@ package com.hdms.antivirus.infrastructure.clamd;
 import com.hdms.antivirus.contract.VirusScanner;
 import com.hdms.antivirus.infrastructure.clamd.config.ClamdConfig;
 import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 
 import java.io.*;
@@ -17,24 +16,19 @@ import java.nio.charset.StandardCharsets;
  */
 @Component
 @RequiredArgsConstructor
-@Slf4j
-public class ClamAVClient implements VirusScanner {
+public class ClamavScanner implements VirusScanner {
 
     private final ClamdConfig clamdConfig;
-
+    private static final String OK ="OK";
+    private static final String FOUND ="FOUND";
     /**
-     * Streams the given data to the server in chunks. The whole data is not kept in memory.
-     * This method is preferred if you don't want to keep the data in memory, for instance by scanning a file on disk.
-     * Since the parameter InputStream is not reset, you can not use the stream afterwards, as it will be left in a EOF-state.
-     * If your goal is to scan some data, and then pass that data further, consider using {@link #scan(byte[]) scan(byte[] in)}.
-     * <p>
-     * Opens a socket and reads the reply. Parameter input stream is NOT closed.
+     * This method inputStream preferred if you don't want to keep the data in memory, for instance by scanning a file on disk.
+     * Since the parameter InputStream inputStream not reset, you can not use the stream afterwards, as it will be left in a EOF-state.
+     * If your goal inputStream to scan some data, and then pass that data further, consider using {@link #scan(byte[]) scan(byte[] in)}.
      *
-     * @param is data to scan. Not closed by this method!
-     * @return server reply
      */
     @Override
-    public byte[] scan(InputStream is) throws IOException {
+    public byte[] scan(InputStream inputStream) throws IOException {
         try (
                 Socket socket = new Socket ( clamdConfig.getHostname (), clamdConfig.getPort () );
                 OutputStream outs = new BufferedOutputStream ( socket.getOutputStream () )) {
@@ -50,10 +44,10 @@ public class ClamAVClient implements VirusScanner {
 
             try (InputStream clamIs = socket.getInputStream ()) {
                 // send data
-                int read = is.read ( chunk );
+                int read = inputStream.read ( chunk );
                 while (read >= 0) {
-                    // The format of the chunk is: '<length><data>' where <length> is the size of the following data in bytes expressed as a 4 byte unsigned
-                    // integer in network byte order and <data> is the actual chunk. Streaming is terminated by sending a zero-length chunk.
+                    // The format of the chunk inputStream: '<length><data>' where <length> inputStream the size of the following data in bytes expressed as a 4 byte unsigned
+                    // integer in network byte order and <data> inputStream the actual chunk. Streaming inputStream terminated by sending a zero-length chunk.
                     byte[] chunkSize = ByteBuffer.allocate ( 4 ).putInt ( read ).array ();
 
                     outs.write ( chunkSize );
@@ -63,7 +57,7 @@ public class ClamAVClient implements VirusScanner {
                         byte[] reply = assertSizeLimit ( readAll ( clamIs ) );
                         throw new IOException ( "Scan aborted. Reply from server: " + new String ( reply, StandardCharsets.US_ASCII ) );
                     }
-                    read = is.read ( chunk );
+                    read = inputStream.read ( chunk );
                 }
 
                 // terminate scan
@@ -75,15 +69,9 @@ public class ClamAVClient implements VirusScanner {
         }
     }
 
-    /**
-     * Scans bytes for virus by passing the bytes to clamav
-     *
-     * @param in data to scan
-     * @return server reply
-     **/
     @Override
-    public byte[] scan(byte[] in) throws IOException {
-        ByteArrayInputStream bis = new ByteArrayInputStream ( in );
+    public byte[] scan(byte[] inputBytes) throws IOException {
+        ByteArrayInputStream bis = new ByteArrayInputStream ( inputBytes );
         return scan ( bis );
     }
 
@@ -94,10 +82,11 @@ public class ClamAVClient implements VirusScanner {
      * @return true if no virus was found according to the clamd reply message
      */
 
+
     @Override
     public boolean isCleanReply(byte[] reply) {
-        String r = new String ( reply, StandardCharsets.US_ASCII );
-        return (r.contains ( "OK" ) && !r.contains ( "FOUND" ));
+        String scanResult = new String ( reply, StandardCharsets.US_ASCII );
+        return (scanResult.contains ( OK ) && !scanResult.contains ( FOUND ));
     }
 
     private byte[] assertSizeLimit(byte[] replyByt) {
