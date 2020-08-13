@@ -3,6 +3,7 @@ package com.hdms.antivirus.infrastructure.clamd;
 import com.hdms.antivirus.contract.HealthCheck;
 import com.hdms.antivirus.infrastructure.clamd.config.ClamdConfig;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 
 import java.io.IOException;
@@ -14,6 +15,7 @@ import java.util.Arrays;
 
 @Component
 @RequiredArgsConstructor
+@Slf4j
 public class ClamdVerifier implements HealthCheck {
 
     private final ClamdConfig clamdConfig;

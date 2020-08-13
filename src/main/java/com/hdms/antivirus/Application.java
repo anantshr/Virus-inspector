@@ -1,6 +1,7 @@
 package com.hdms.antivirus;
 
 import com.hdms.antivirus.infrastructure.clamd.config.ClamdConfig;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
@@ -15,6 +16,7 @@ import javax.servlet.MultipartConfigElement;
 @Configuration
 @EnableConfigurationProperties(value = ClamdConfig.class)
 @SpringBootApplication
+@Slf4j
 public class Application {
 
     private final ClamdConfig clamdConfig;
