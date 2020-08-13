@@ -5,8 +5,16 @@ import java.io.InputStream;
 
 public interface VirusScanner {
 
-    byte[] scan(InputStream is) throws IOException;
+    /**
+     * Input stream parameter are NOT closed inside the method.
+     * Streams the given data to the server in chunks. The whole data inputStream not kept in memory.
+     * Scans inputStream for virus by passing the InputStream to method
+     */
+    byte[] scan(InputStream inputStream) throws IOException;
 
+    /**
+     * Scans bytes for virus by passing the byte[] to method
+     **/
     byte[] scan(byte[] in) throws IOException;
 
     boolean isCleanReply(byte[] reply);
