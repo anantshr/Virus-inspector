@@ -10,6 +10,17 @@ If the above statement is your business need then this application can help you 
 ## High level design 
 ![Overall Design](overAllDesign.png)
 
+#Tech and Framework used
+  
+  This is a Spring boot application. The Rest infrastructure port expose the rest endpoints. 
+ 
+  ClamAV Demon is one of tfhe infrastructure port. Where all the scanning logic runs.
+  The daemon listens for incoming connections on Unix and/or TCP socket and scans files or directories on demand. More details here http://linux.die.net/man/8/clamd
+  Detail about clam AV is available https://www.clamav.net/documents/clam-antivirus-user-manual
+
+  This is using Maven as a build tool
+  This has Cucurmber for BDD and Junit for TDD 
+
 ## Setting up clamd server
 
 Clamd should be up and running before running the virus inspector service. 
