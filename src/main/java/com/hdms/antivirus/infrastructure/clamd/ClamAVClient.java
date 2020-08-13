@@ -3,6 +3,7 @@ package com.hdms.antivirus.infrastructure.clamd;
 import com.hdms.antivirus.contract.VirusScanner;
 import com.hdms.antivirus.infrastructure.clamd.config.ClamdConfig;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 
 import java.io.*;
@@ -16,6 +17,7 @@ import java.nio.charset.StandardCharsets;
  */
 @Component
 @RequiredArgsConstructor
+@Slf4j
 public class ClamAVClient implements VirusScanner {
 
     private final ClamdConfig clamdConfig;
