@@ -1,16 +1,16 @@
-#Virus Inspector
+# Virus Inspector
 
-##Motivation
+## Motivation
 "I am building an application where my user will be able to upload files, And I want to make sure there are no executable files. i.e. no virus"
 
 If the above statement is your business need then this application can help you to achieve this.
 
-##Build status
+## Build status
  todo http://www.codeblocq.com/2016/04/Setup-Travis-CI-with-your-node-project/
 ## High level design 
 ![Overall Design](overAllDesign.png)
 
-##Tech and Framework used
+## Tech and Framework used
   
   This is a Spring boot application. The Rest infrastructure port expose the rest endpoints. 
  
@@ -63,5 +63,5 @@ Application is responding: true
 curl --output -F "file=<file>" -X POST localhost:8080/diagnosticReport 
 It is a Good File : true
 ```
-##License
+## License
 ClamAV is licensed under the GNU General Public License, Version 2.
