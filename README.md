@@ -10,9 +10,6 @@ If the above statement is your business need then this application can help you 
 ## High level design 
 ![Overall Design](overAllDesign.png)
 
-## The technical details
-
-
 ## Setting up clamd server
 
 Clamd should be up and running before running the virus inspector service. 
@@ -23,7 +20,7 @@ docker run -d -p 3310:3310 mk0x/docker-clamav:alpine
 ```
 
 # Usage
-Virus inspector can be build either using build tool like maven
+Virus inspector can be build using build tool like maven
 steps: 
 ```
 git clone https://github.com/anantshr/Virus-inspector.git
@@ -47,7 +44,7 @@ once build is success starting the REST service is quite straightforward
 java -jar virus-inspector-0.0.1.jar 
 ```
 
-# Testing the REST service```
+# Testing the REST service
 ```
 curl localhost:8080
 Clamd responding: true
