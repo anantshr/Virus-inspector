@@ -1,7 +1,7 @@
 package com.hdms.antivirus.infrastructure.clamd;
 
-import com.hdms.antivirus.infrastructure.clamd.config.ClamdConfig;
 import com.hdms.antivirus.contract.VirusScanner;
+import com.hdms.antivirus.infrastructure.clamd.config.ClamdConfig;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
@@ -36,7 +36,7 @@ public class ClamAVClient implements VirusScanner {
         try (
                 Socket socket = new Socket ( clamdConfig.getHostname (), clamdConfig.getPort () );
                 OutputStream outs = new BufferedOutputStream ( socket.getOutputStream () )) {
-            socket.setSoTimeout ( clamdConfig.getTimeout() );
+            socket.setSoTimeout ( clamdConfig.getTimeout () );
 
             // handshake
             outs.write ( "zINSTREAM\0".getBytes ( StandardCharsets.US_ASCII ) );

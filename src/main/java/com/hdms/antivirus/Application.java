@@ -17,27 +17,27 @@ import javax.servlet.MultipartConfigElement;
 @SpringBootApplication
 public class Application {
 
-  private final ClamdConfig clamdConfig;
+    private final ClamdConfig clamdConfig;
 
-  public Application(ClamdConfig clamdConfig) {
-    this.clamdConfig = clamdConfig;
-  }
+    public Application(ClamdConfig clamdConfig) {
+        this.clamdConfig = clamdConfig;
+    }
 
-  @Bean
-  MultipartConfigElement multipartConfigElement() {
-    MultipartConfigFactory factory = new MultipartConfigFactory();
-    factory.setMaxFileSize( DataSize.parse ( clamdConfig.getMaxfilesize() ) );
-    factory.setMaxRequestSize( DataSize.parse ( clamdConfig.getMaxrequestsize() ) );
-    return factory.createMultipartConfig();
-  }
+    @Bean
+    MultipartConfigElement multipartConfigElement() {
+        MultipartConfigFactory factory = new MultipartConfigFactory ();
+        factory.setMaxFileSize ( DataSize.parse ( clamdConfig.getMaxfilesize () ) );
+        factory.setMaxRequestSize ( DataSize.parse ( clamdConfig.getMaxrequestsize () ) );
+        return factory.createMultipartConfig ();
+    }
 
-  public static void main(String[] args) {
-    SpringApplication app = new SpringApplication(Application.class);
-    app.run(args);
-  }
+    public static void main(String[] args) {
+        SpringApplication app = new SpringApplication ( Application.class );
+        app.run ( args );
+    }
 
-  @Bean
-  public RestTemplate getRestTemplate() {
-    return new RestTemplate();
-  }
+    @Bean
+    public RestTemplate getRestTemplate() {
+        return new RestTemplate ();
+    }
 }

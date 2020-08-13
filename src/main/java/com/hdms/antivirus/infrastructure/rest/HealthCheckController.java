@@ -17,6 +17,6 @@ public class HealthCheckController {
 
     @RequestMapping("/")
     public String ping() throws IOException {
-        return "Application is responding: " + healthStatus.ping() + "\n";
+        return "Application is responding: " + healthStatus.ping () + "\n";
     }
 }

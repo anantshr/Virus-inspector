@@ -1,6 +1,7 @@
 package com.hdms.antivirus.infrastructure.clamd;
-import com.hdms.antivirus.infrastructure.clamd.config.ClamdConfig;
+
 import com.hdms.antivirus.contract.HealthCheck;
+import com.hdms.antivirus.infrastructure.clamd.config.ClamdConfig;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
@@ -24,19 +25,19 @@ public class ClamdVerifier implements HealthCheck {
      */
     @Override
     public boolean ping() throws IOException {
-        try (Socket socket = new Socket(clamdConfig.getHostname (),clamdConfig.getPort ()); OutputStream outs = socket.getOutputStream()) {
-            socket.setSoTimeout(clamdConfig.getTimeout ());
-            outs.write("PING".getBytes(StandardCharsets.US_ASCII));
-            outs.flush();
+        try (Socket socket = new Socket ( clamdConfig.getHostname (), clamdConfig.getPort () ); OutputStream outs = socket.getOutputStream ()) {
+            socket.setSoTimeout ( clamdConfig.getTimeout () );
+            outs.write ( "PING".getBytes ( StandardCharsets.US_ASCII ) );
+            outs.flush ();
             byte[] b = new byte[4];// PONG
-            InputStream inputStream = socket.getInputStream();
+            InputStream inputStream = socket.getInputStream ();
             int copyIndex = 0;
             int readResult;
             do {
-                readResult = inputStream.read(b, copyIndex, Math.max(b.length - copyIndex, 0));
+                readResult = inputStream.read ( b, copyIndex, Math.max ( b.length - copyIndex, 0 ) );
                 copyIndex += readResult;
             } while (readResult > 0);
-            return Arrays.equals(b, "PONG".getBytes(StandardCharsets.US_ASCII));
+            return Arrays.equals ( b, "PONG".getBytes ( StandardCharsets.US_ASCII ) );
         }
     }
 }
