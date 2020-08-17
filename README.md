@@ -34,7 +34,7 @@ docker run -d -p 3310:3310 mk0x/docker-clamav:alpine
 Virus inspector can be build using build tool like maven
 steps: 
 ```
-git clone https://github.com/anantshr/Virus-inspector.git
+git clone https://stash.hilti.com/scm/ddu/virus-scanner.git
 ```
 ```
 cd Virus-inspector

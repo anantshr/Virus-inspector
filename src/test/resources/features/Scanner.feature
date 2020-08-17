@@ -1,5 +1,11 @@
 Feature: the version can be retrieved
 
+  Scenario: User submit a image of a broken hilti tool
+    Given A valid Hilti application user
+    When user upload file brokenTool.jpg
+    Then the virus scan happens successfully with response code is 200
+    And the final diagnose response It is a Good File : true
+
   Scenario: user submit a valid file
     Given A valid Hilti application user
     When user upload file news.txt
@@ -18,8 +24,3 @@ Feature: the version can be retrieved
     Then the virus scan happens successfully with response code is 200
     And the final diagnose response It is a Good File : true
 
-  Scenario: User submit a image of a broken hilti tool
-    Given A valid Hilti application user
-    When user upload file brokenTool.jpg
-    Then the virus scan happens successfully with response code is 200
-    And the final diagnose response It is a Good File : true
